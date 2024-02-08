@@ -2,6 +2,8 @@ import { formatDistance, format } from 'date-fns';
 
 import type { Order as IOrder } from '@rt/interfaces';
 
+import { ActivityLabel, type Status } from '../ActivityLabel';
+
 const TitleLabel: React.FC<{ children: React.ReactNode }> = ({ children }) => {
   return <span className="text-sm text-[#2D2D2E] mr-2">{children}</span>;
 };
@@ -12,14 +14,6 @@ const Col: React.FC<{ children: React.ReactNode }> = ({ children }) => {
 
 const ColText: React.FC<{ children: React.ReactNode }> = ({ children }) => {
   return <span className="text-[#2D2D2E] text-base">{children}</span>;
-};
-
-const StatusLabel: React.FC = () => {
-  return (
-    <span className="text-xs text-[#3E896C] bg-[#EFFAF3] h-[16px] px-1 rounded mr-3">
-      Accepted
-    </span>
-  );
 };
 
 const Order: React.FC<{ order: IOrder }> = ({ order }) => {
@@ -35,7 +29,7 @@ const Order: React.FC<{ order: IOrder }> = ({ order }) => {
     <div className="grid grid-cols-subgrid col-span-12 bg-[#FFFFFF] p-3 justify-items-center mb-2">
       <div className="col-span-6 justify-self-start">
         <div className="flex items-center">
-          <StatusLabel />
+          <ActivityLabel status={order.status as Status} />
           <p className="text-base text-[#2D2D2E] mr-3">{orderName}</p>
           <span className="text-xs text-[#808080]">
             {formatDistance(new Date(order.lastSaleAt), new Date(), {
