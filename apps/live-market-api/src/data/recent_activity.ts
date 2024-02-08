@@ -1,4 +1,4 @@
-import { Activity } from "./types";
+import type { Activity } from "@rt/interfaces";
 
 export type RecentActivity = Activity[];
 

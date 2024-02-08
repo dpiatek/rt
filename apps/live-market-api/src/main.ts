@@ -4,6 +4,7 @@
  */
 
 import express from 'express';
+import cors from 'cors';
 import * as path from 'path';
 
 import { acceptedOrders } from './data/accepted_orders';
@@ -11,6 +12,10 @@ import { liveDemand } from './data/live_demand';
 import  {recentActivity } from './data/recent_activity';
 
 const app = express();
+
+app.use(cors({
+  origin: 'http://localhost:3000',
+}))
 
 app.use('/assets', express.static(path.join(__dirname, 'assets')));
 

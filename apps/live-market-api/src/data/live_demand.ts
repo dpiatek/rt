@@ -1,4 +1,4 @@
-import type { Order } from "./types";
+import type { Order } from "@rt/interfaces";
 
 export interface LiveDemand {
   results: Order[];
