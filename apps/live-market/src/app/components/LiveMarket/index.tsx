@@ -5,28 +5,89 @@ import React, { useState } from 'react';
 import { Header } from '../Header';
 import { OrdersGrid } from '../OrdersGrid';
 import { Order } from '../Order';
+import { Activity } from '../Activity';
 
 import { useAcceptedOrders } from '../../hooks/useAcceptedOrders';
+import { useLiveDemand } from '../../hooks/useLiveDemand';
+import { useRecentActivity } from '../../hooks/useRecentActivity';
 
-const LiveMarket = () => {
-  const { data } = useAcceptedOrders();
-  const [acceptedOrdersCollapsed, setAcceptedOrdersCollapsed] = useState(false);
+const AcceptedOrders: React.FC = () => {
+  const acceptedOrders = useAcceptedOrders();
+  const [collapsed, setCollapsed] = useState(false);
 
   return (
-    <main className="p-8 bg-[#F5F5F5]">
-      <section>
-        <Header
-          title="Accepted Orders"
-          collapsed={acceptedOrdersCollapsed}
-          setCollapsed={() => setAcceptedOrdersCollapsed(!acceptedOrdersCollapsed)}
-        />
+    <section className="mb-8">
+      <Header
+        title="Accepted Orders"
+        collapsed={collapsed}
+        setCollapsed={() => setCollapsed(!collapsed)}
+      />
 
-        <OrdersGrid collapsed={acceptedOrdersCollapsed}>
-          {data?.results.map((order) => {
+      {acceptedOrders?.isSuccess ? (
+        <OrdersGrid collapsed={collapsed}>
+          {acceptedOrders?.data?.results.map((order) => {
             return <Order key={order.id} order={order} />;
           })}
         </OrdersGrid>
-      </section>
+      ) : null}
+    </section>
+  );
+};
+
+const LiveDemand: React.FC = () => {
+  const liveDemand = useLiveDemand();
+  const [liveDemandCollapsed, setLiveDemandCollapsed] = useState(false);
+
+  return (
+    <section className="mb-8">
+      <Header
+        title="Live Demand"
+        collapsed={liveDemandCollapsed}
+        setCollapsed={() => setLiveDemandCollapsed(!liveDemandCollapsed)}
+      />
+
+      {liveDemand?.isSuccess ? (
+        <OrdersGrid collapsed={liveDemandCollapsed}>
+          {liveDemand?.data?.results.map((order) => {
+            return <Order key={order.id} order={order} />;
+          })}
+        </OrdersGrid>
+      ) : null}
+    </section>
+  );
+};
+
+const RecentActivity: React.FC = () => {
+  const recentActivity = useRecentActivity();
+  const [recentActivityCollapsed, setRecentActivityCollapsed] = useState(false);
+
+  return (
+    <section className="mb-8">
+      <Header
+        title="Recent Activity"
+        collapsed={recentActivityCollapsed}
+        setCollapsed={() =>
+          setRecentActivityCollapsed(!recentActivityCollapsed)
+        }
+      />
+
+      {recentActivity?.isSuccess ? (
+        <OrdersGrid collapsed={recentActivityCollapsed}>
+          {recentActivity?.data?.map((activity) => {
+            return <Activity key={activity.id} activity={activity} />;
+          })}
+        </OrdersGrid>
+      ) : null}
+    </section>
+  );
+};
+
+const LiveMarket = () => {
+  return (
+    <main className="p-8 bg-[#F5F5F5]">
+      <AcceptedOrders />
+      <LiveDemand />
+      <RecentActivity />
     </main>
   );
 };

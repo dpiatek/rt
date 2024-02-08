@@ -1,6 +1,6 @@
-import { formatDistance, format } from 'date-fns';
+import { format } from 'date-fns';
 
-import type { Order as IOrder } from '@rt/interfaces';
+import type { Activity as IActivity } from '@rt/interfaces';
 
 const TitleLabel: React.FC<{ children: React.ReactNode }> = ({ children }) => {
   return <span className="text-sm text-[#2D2D2E] mr-2">{children}</span>;
@@ -22,13 +22,14 @@ const StatusLabel: React.FC = () => {
   );
 };
 
-const Order: React.FC<{ order: IOrder }> = ({ order }) => {
-  const orderName = `${order.sku.species} ${order.sku.type}`;
+const Activity: React.FC<{ activity: IActivity }> = ({ activity }) => {
+  const activityName = `${activity.sku.species} ${activity.sku.type}`;
 
   // Ideally this would not be done on the frontend at all
   const currency: { [key: string]: string } = {
     ENG: '£',
     FRA: '€',
+    NOR: 'kr',
   };
 
   return (
@@ -36,24 +37,20 @@ const Order: React.FC<{ order: IOrder }> = ({ order }) => {
       <div className="col-span-6 justify-self-start">
         <div className="flex items-center">
           <StatusLabel />
-          <p className="text-base text-[#2D2D2E] mr-3">{orderName}</p>
-          <span className="text-xs text-[#808080]">
-            {formatDistance(new Date(order.lastSaleAt), new Date(), {
-              addSuffix: true,
-            })}
-          </span>
+          <p className="text-base text-[#2D2D2E] mr-3">{activityName}</p>
+          <span className="text-xs text-[#808080]">N/A</span>
         </div>
 
         <div>
-          <TitleLabel>{order.grade}</TitleLabel>
+          <TitleLabel>{activity.grade}</TitleLabel>
           <TitleLabel>•</TitleLabel>
-          <TitleLabel>{order.sku.variation}</TitleLabel>
+          <TitleLabel>{activity.sku.variation}</TitleLabel>
           <TitleLabel>•</TitleLabel>
-          <TitleLabel>{order.fishingMethod}</TitleLabel>
-          {order.country ? (
+          <TitleLabel>{activity.fishing_method}</TitleLabel>
+          {activity.country ? (
             <>
               <TitleLabel>•</TitleLabel>
-              <TitleLabel>{order.country}</TitleLabel>
+              <TitleLabel>{activity.country}</TitleLabel>
             </>
           ) : null}
         </div>
@@ -61,24 +58,26 @@ const Order: React.FC<{ order: IOrder }> = ({ order }) => {
 
       <Col>
         <span className="text-sm text-white bg-[#939599] rounded-full w-6 h-6 text-center block">
-          <span className="leading-none align-middle">{order.quality}</span>
+          <span className="leading-none align-middle">{activity.quality}</span>
         </span>
       </Col>
 
       <Col>
-        <ColText>{format(new Date(order.dispatchDate), "E, do LLL")}</ColText>
+        <ColText>
+          {format(new Date(activity.dispatch_date), 'E, do LLL')}
+        </ColText>
       </Col>
 
       <Col>
         {/* This is inconsistent in the date, skipping formatting */}
-        <ColText>{order.quantity}</ColText>
+        <ColText>{activity.quantity}</ColText>
       </Col>
 
       <Col>
-        <ColText>{order.country ? `${currency[order.country]}${order.price}` : "N/A"}</ColText>
+        <ColText>{`${currency[activity.country]}${activity.price}`}</ColText>
       </Col>
     </div>
   );
 };
 
-export { Order };
+export { Activity };
