@@ -1,4 +1,5 @@
 import './global.css';
+import './styles.css';
 
 export const metadata = {
   title: 'Welcome to live-market',
