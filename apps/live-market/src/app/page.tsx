@@ -1,11 +1,10 @@
+import { Header } from "./components/Header";
+
 export default async function Index() {
   return (
     <main className="p-8 bg-[#F5F5F5]">
       <section>
-        <div className="h-[40px] flex items-center">
-          <h2 className="font-bold text-xl leading-7">Accepted Orders</h2>
-          <button className="m-0 p-0 ml-3 text-sm text-[#2971C7]">Collapse</button>
-        </div>
+        <Header title="Accepted Orders" />
 
         <div className="grid grid-cols-12">
           <div className="grid grid-cols-subgrid col-span-12 h-[40px] items-center">
