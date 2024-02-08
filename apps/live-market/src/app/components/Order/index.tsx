@@ -1,3 +1,7 @@
+import { formatDistance, format } from 'date-fns';
+
+import type { Order as IOrder } from '@rt/interfaces';
+
 const TitleLabel: React.FC<{ children: React.ReactNode }> = ({ children }) => {
   return <span className="text-sm text-[#2D2D2E] mr-2">{children}</span>;
 };
@@ -18,45 +22,56 @@ const StatusLabel: React.FC = () => {
   );
 };
 
-const Order: React.FC = () => {
+const Order: React.FC<{ order: IOrder }> = ({ order }) => {
+  const orderName = `${order.sku.species} ${order.sku.type}`;
+
+  // Ideally this would not be done on the frontend at all
+  const currency: { [key: string]: string } = {
+    ENG: '£',
+    FRA: '€',
+  };
+
   return (
-    <div className="grid grid-cols-subgrid col-span-12 bg-[#FFFFFF] p-3 justify-items-center">
+    <div className="grid grid-cols-subgrid col-span-12 bg-[#FFFFFF] p-3 justify-items-center mb-2">
       <div className="col-span-6 justify-self-start">
         <div className="flex items-center">
           <StatusLabel />
-          <p className="text-base text-[#2D2D2E] mr-3">
-            Salmon machine cut filet
-          </p>
-          <span className="text-xs text-[#808080]">just now</span>
+          <p className="text-base text-[#2D2D2E] mr-3">{orderName}</p>
+          <span className="text-xs text-[#808080]">
+            {formatDistance(new Date(order.lastSaleAt), new Date(), {
+              addSuffix: true,
+            })}
+          </span>
         </div>
 
         <div>
-          <TitleLabel>100+g</TitleLabel>
+          <TitleLabel>{order.grade}</TitleLabel>
           <TitleLabel>•</TitleLabel>
-          <TitleLabel>whole</TitleLabel>
+          <TitleLabel>{order.sku.variation}</TitleLabel>
           <TitleLabel>•</TitleLabel>
-          <TitleLabel>Trawls</TitleLabel>
+          <TitleLabel>{order.fishingMethod}</TitleLabel>
           <TitleLabel>•</TitleLabel>
-          <TitleLabel>FRA</TitleLabel>
+          <TitleLabel>{order.country}</TitleLabel>
         </div>
       </div>
 
       <Col>
         <span className="text-sm text-white bg-[#939599] rounded-full w-6 h-6 text-center block">
-          <span className="leading-none align-middle">A-</span>
+          <span className="leading-none align-middle">{order.quality}</span>
         </span>
       </Col>
 
       <Col>
-        <ColText>Today</ColText>
+        <ColText>{format(new Date(order.dispatchDate), "E, do LLL")}</ColText>
       </Col>
 
       <Col>
-        <ColText>&lt;100 boxes</ColText>
+        {/* This is inconsistent in the date, skipping formatting */}
+        <ColText>{order.quantity}</ColText>
       </Col>
 
       <Col>
-        <ColText>€7.00</ColText>
+        <ColText>{`${currency[order.country]}${order.price}`}</ColText>
       </Col>
     </div>
   );

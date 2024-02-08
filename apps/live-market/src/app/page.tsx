@@ -1,17 +1,19 @@
-import { Header } from './components/Header';
-import { OrdersGrid } from './components/OrdersGrid';
-import { Order } from './components/Order';
+import { dehydrate, QueryClient, HydrationBoundary } from "@tanstack/react-query";
+
+import { LiveMarket } from "./components/LiveMarket";
+import { fetchAcceptedOrders } from "./hooks/useAcceptedOrders";
 
 export default async function Index() {
-  return (
-    <main className="p-8 bg-[#F5F5F5]">
-      <section>
-        <Header title="Accepted Orders" />
+  const queryClient = new QueryClient();
+  await queryClient.prefetchQuery({
+    queryKey: ["accepted-orders"],
+    queryFn: () => fetchAcceptedOrders(),
+  });
 
-        <OrdersGrid>
-          <Order />
-        </OrdersGrid>
-      </section>
-    </main>
+  return (
+    <HydrationBoundary state={dehydrate(queryClient)}>
+      <LiveMarket />
+    </HydrationBoundary>  
+
   );
 }

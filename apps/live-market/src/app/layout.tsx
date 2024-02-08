@@ -1,13 +1,15 @@
-import { Arya } from 'next/font/google'
+import { Arya } from 'next/font/google';
 
 import './global.css';
 import './styles.css';
 
+import Providers from './providers';
+
 const arya = Arya({
-  weight: ["400", "700"],
+  weight: ['400', '700'],
   subsets: ['latin'],
   display: 'swap',
-})
+});
 
 export const metadata = {
   title: 'Welcome to live-market',
@@ -21,7 +23,9 @@ export default function RootLayout({
 }) {
   return (
     <html lang="en" className={arya.className}>
-      <body>{children}</body>
+      <body>
+        <Providers>{children}</Providers>
+      </body>
     </html>
   );
 }
