@@ -1,4 +1,5 @@
-import { Header } from "./components/Header";
+import { Header } from './components/Header';
+import { OrdersGrid } from './components/OrdersGrid';
 
 export default async function Index() {
   return (
@@ -6,27 +7,16 @@ export default async function Index() {
       <section>
         <Header title="Accepted Orders" />
 
-        <div className="grid grid-cols-12">
-          <div className="grid grid-cols-subgrid col-span-12 h-[40px] items-center">
-            <div className="col-start-7 col-span-1 text-center">
-              <p className="font-bold text-[10px] text-[#939599] uppercase leading-4">Quality</p>
-            </div>
-            <div className="col-start-8 col-span-1 text-center">
-              <p className="font-bold text-[10px] text-[#939599] uppercase leading-4">Dispatch date</p>
-            </div>
-            <div className="col-start-9 col-span-1 text-center">
-              <p className="font-bold text-[10px] text-[#939599] uppercase leading-4">Quantity</p>
-            </div>
-            <div className="col-start-10 col-span-1 text-center">
-              <p className="font-bold text-[10px] text-[#939599] uppercase leading-4">Price / kg</p>
-            </div>
-          </div>
-
+        <OrdersGrid>
           <div className="grid grid-cols-subgrid col-span-12 bg-[#FFFFFF] p-3 justify-items-center">
             <div className="col-span-6 justify-self-start">
               <div className="flex items-center">
-                <span className="text-xs text-[#3E896C] bg-[#EFFAF3] h-[16px] px-1 rounded mr-3">Accepted</span>
-                <p className="text-base text-[#2D2D2E] mr-3">Salmon machine cut filet</p>
+                <span className="text-xs text-[#3E896C] bg-[#EFFAF3] h-[16px] px-1 rounded mr-3">
+                  Accepted
+                </span>
+                <p className="text-base text-[#2D2D2E] mr-3">
+                  Salmon machine cut filet
+                </p>
                 <span className="text-xs text-[#808080]">just now</span>
               </div>
 
@@ -59,7 +49,7 @@ export default async function Index() {
               <span className="text-[#2D2D2E] text-base">€7.00</span>
             </div>
           </div>
-        </div>
+        </OrdersGrid>
       </section>
     </main>
   );
