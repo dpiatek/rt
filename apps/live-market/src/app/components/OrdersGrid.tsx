@@ -1,5 +1,8 @@
-const OrdersGrid: React.FC<{ children: React.ReactNode }> = ({ children }) => {
-  return (
+const OrdersGrid: React.FC<{
+  children: React.ReactNode;
+  collapsed: boolean;
+}> = ({ children, collapsed }) => {
+  return collapsed ? null : (
     <div className="grid grid-cols-12">
       <div className="grid grid-cols-subgrid col-span-12 h-[40px] items-center">
         <div className="col-start-7 col-span-1 text-center">

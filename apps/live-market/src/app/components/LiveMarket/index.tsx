@@ -1,4 +1,6 @@
-"use client"
+'use client';
+
+import React, { useState } from 'react';
 
 import { Header } from '../Header';
 import { OrdersGrid } from '../OrdersGrid';
@@ -8,13 +10,18 @@ import { useAcceptedOrders } from '../../hooks/useAcceptedOrders';
 
 const LiveMarket = () => {
   const { data } = useAcceptedOrders();
+  const [acceptedOrdersCollapsed, setAcceptedOrdersCollapsed] = useState(false);
 
   return (
     <main className="p-8 bg-[#F5F5F5]">
       <section>
-        <Header title="Accepted Orders" />
+        <Header
+          title="Accepted Orders"
+          collapsed={acceptedOrdersCollapsed}
+          setCollapsed={() => setAcceptedOrdersCollapsed(!acceptedOrdersCollapsed)}
+        />
 
-        <OrdersGrid>
+        <OrdersGrid collapsed={acceptedOrdersCollapsed}>
           {data?.results.map((order) => {
             return <Order key={order.id} order={order} />;
           })}
