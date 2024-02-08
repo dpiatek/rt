@@ -49,7 +49,7 @@ const LiveDemand: React.FC = () => {
       {liveDemand?.isSuccess ? (
         <OrdersGrid collapsed={liveDemandCollapsed}>
           {liveDemand?.data?.results.map((order) => {
-            return <Order key={order.id} order={order} />;
+            return <Order key={order.id} order={order} showControls={true} />;
           })}
         </OrdersGrid>
       ) : null}
