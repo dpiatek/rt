@@ -1,13 +1,21 @@
-import { getGreeting } from '../support/app.po';
-
 describe('live-market-e2e', () => {
-  beforeEach(() => cy.visit('/'));
+  describe('Accepted Orders', () => {
+    it('should add the order to accepted orders', () => {
+      cy.visit('/');
 
-  it('should display welcome message', () => {
-    // Custom command example, see `../support/commands.ts` file
-    cy.login('my-email@something.com', 'myPassword');
+      cy.findByTestId('accepted-orders').within(() => {
+        cy.findAllByTestId('order').should('have.length', 2);
+      });
 
-    // Function helper example, see `../support/app.po.ts` file
-    getGreeting().contains(/Welcome/);
-  });
+      cy.findByTestId('live-demand').within(() => {
+        cy.findAllByTestId('order').first().within(() => {
+          cy.contains('Accept').click();
+        });
+      });
+
+      cy.findByTestId('accepted-orders').within(() => {
+        cy.findAllByTestId('order').should('have.length', 3);
+      });
+    });
+  })
 });

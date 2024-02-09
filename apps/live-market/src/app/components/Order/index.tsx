@@ -35,7 +35,7 @@ const Order: React.FC<{ order: IOrder; showControls?: boolean }> = ({
   };
 
   return (
-    <div className="grid grid-cols-subgrid col-span-12 bg-[#FFFFFF] p-3 justify-items-center mb-2">
+    <div data-testid="order" className="grid grid-cols-subgrid col-span-12 bg-[#FFFFFF] p-3 justify-items-center mb-2">
       <div className="col-span-6 justify-self-start">
         <div className="flex items-center">
           <ActivityLabel status={order.status as Status} />

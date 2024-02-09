@@ -16,7 +16,7 @@ const AcceptedOrders: React.FC = () => {
   const [collapsed, setCollapsed] = useState(false);
 
   return (
-    <section className="mb-8">
+    <section className="mb-8" data-testid="accepted-orders">
       <Header
         title="Accepted Orders"
         collapsed={collapsed}
@@ -39,7 +39,7 @@ const LiveDemand: React.FC = () => {
   const [liveDemandCollapsed, setLiveDemandCollapsed] = useState(false);
 
   return (
-    <section className="mb-8">
+    <section className="mb-8" data-testid="live-demand">
       <Header
         title="Live Demand"
         collapsed={liveDemandCollapsed}
